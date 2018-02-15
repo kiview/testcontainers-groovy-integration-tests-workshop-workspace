@@ -1,0 +1,22 @@
+group 'io.devopsgathering'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+    testCompile 'com.github.testcontainers:testcontainers-spock:1.0.0-tc1.6.0'
+
+    // special testcontainers module for specialized postgresql containers
+    testCompile 'org.testcontainers:postgresql:1.6.0'
+}
