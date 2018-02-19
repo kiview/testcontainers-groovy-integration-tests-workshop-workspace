@@ -11,7 +11,6 @@ import org.testcontainers.containers.*
 import org.junit.*
 import static io.restassured.RestAssured.*
 import static org.hamcrest.Matchers.*
-import static org.testcontainers.containers.Network.newNetwork;
 
 @Test
 void "I will fail"() {
