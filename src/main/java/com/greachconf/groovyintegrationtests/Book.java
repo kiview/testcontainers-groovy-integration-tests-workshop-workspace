@@ -1,4 +1,4 @@
-package io.devopgathering.groovyintegrationtests;
+package com.greachconf.groovyintegrationtests;
 
 import java.util.Objects;
 
@@ -9,6 +9,14 @@ public class Book {
     public Book(String name, String author) {
         this.name = name;
         this.author = author;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     @Override

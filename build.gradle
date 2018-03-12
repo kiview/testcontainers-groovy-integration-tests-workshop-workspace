@@ -12,6 +12,9 @@ repositories {
 
 dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'org.flywaydb:flyway-core:5.0.6'
+
+    runtime 'org.postgresql:postgresql:42.2.1'
 
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
@@ -19,4 +22,5 @@ dependencies {
 
     // special testcontainers module for specialized postgresql containers
     testCompile 'org.testcontainers:postgresql:1.6.0'
+    testRuntime group: 'com.h2database', name: 'h2', version: '1.4.196'
 }
