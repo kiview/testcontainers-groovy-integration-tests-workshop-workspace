@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 @GrabResolver(name='jitpack', root='https://jitpack.io', m2Compatible='true')
-@Grab(group='org.testcontainers', module='testcontainers', version='1.6.0')
+@Grab(group='org.testcontainers', module='testcontainers', version='1.7.2')
 @Grab('com.github.testcontainers:testcontainers-groovy-script:1.4.2')
 @Grab(group='io.rest-assured', module='rest-assured', version='3.0.7', scope='test')
 @GrabExclude('org.codehaus.groovy:groovy-xml')
