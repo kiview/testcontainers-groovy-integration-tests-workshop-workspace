@@ -1,7 +1,5 @@
 package com.greachconf.groovyintegrationtests;
 
-import org.flywaydb.core.Flyway;
-
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +9,7 @@ public class BookRepository {
     private final String jdbcUrl;
     private final String username;
     private final String password;
+    private Connection connection;
 
     public BookRepository(String jdbcUrl, String username, String password) {
         this.jdbcUrl = jdbcUrl;
@@ -19,16 +18,36 @@ public class BookRepository {
     }
 
     public void init() {
-        Flyway flyway = new Flyway();
-        flyway.setDataSource(jdbcUrl, username, password);
-        flyway.migrate();
+
+        try {
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            String createSql = "CREATE TABLE books (\n" +
+                    "  id SERIAL,\n" +
+                    "  name varchar(255),\n" +
+                    "  author varchar(255)\n" +
+                    ");";
+
+            connection.createStatement().execute(createSql);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void save(Book book) {
-        try (Connection c = DriverManager.getConnection(jdbcUrl, username, password)) {
+        try {
             String insertBookSql = "INSERT INTO books (name, author) VALUES (?, ?)";
 
-            PreparedStatement ps = c.prepareStatement(insertBookSql);
+            PreparedStatement ps = connection.prepareStatement(insertBookSql);
             ps.setString(1, book.getName());
             ps.setString(2, book.getAuthor());
             ps.executeUpdate();
@@ -39,11 +58,11 @@ public class BookRepository {
     }
 
     public long count() {
-        try (Connection c = DriverManager.getConnection(jdbcUrl, username, password)) {
+        try {
 
-            c.createStatement().execute("SET @foobar = 4");
+            connection.createStatement().execute("SET @foobar = 4");
 
-            ResultSet rs = c.createStatement().executeQuery("SELECT COUNT (*) FROM books");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT (*) FROM books");
             rs.next();
             return rs.getInt(1);
 
@@ -53,10 +72,10 @@ public class BookRepository {
     }
 
     public List<Book> findAllByAuthor(String author) {
-        try (Connection c = DriverManager.getConnection(jdbcUrl, username, password)) {
+        try {
 
             String selectSql = "SELECT name FROM books WHERE author = ?";
-            PreparedStatement ps = c.prepareStatement(selectSql);
+            PreparedStatement ps = connection.prepareStatement(selectSql);
             ps.setString(1, author);
 
             ResultSet rs = ps.executeQuery();

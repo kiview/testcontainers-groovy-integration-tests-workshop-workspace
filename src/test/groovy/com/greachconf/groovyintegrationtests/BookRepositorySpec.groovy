@@ -18,6 +18,7 @@ class BookRepositorySpec {
 
     @After
     void cleanup() {
+        bookRepository.close()
         new File("test.mv.db").delete()
     }
 

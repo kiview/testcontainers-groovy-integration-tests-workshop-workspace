@@ -14,7 +14,6 @@ dependencies {
     implementation "org.testcontainers:testcontainers-bom:1.7.2"
 
     compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'org.flywaydb:flyway-core:5.0.6'
 
     runtime 'org.postgresql:postgresql:42.2.1'
 
