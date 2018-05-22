@@ -1,2 +1,3 @@
 rootProject.name = 'testcontainers-groovy-integration-workshop-workspace'
+enableFeaturePreview("IMPROVED_POM_SUPPORT")
 
